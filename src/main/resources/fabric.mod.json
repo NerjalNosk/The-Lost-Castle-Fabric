@@ -4,17 +4,18 @@
   "version": "${version}",
 
   "name": "The Lost Castle",
-  "description": "This is an example description! Tell everyone what your mod is about!",
+  "description": "The Lost Castle introduces an enormous castle that you'll be able to find with the help of a map given by a journeyman cartographer.",
   "authors": [
-    "Me!"
+    "Jack Bagel",
+    "GilVoisard"
   ],
   "contact": {
-    "homepage": "https://fabricmc.net/",
-    "sources": "https://github.com/FabricMC/fabric-example-mod"
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/the-lost-castle-fabric",
+    "sources": "https://github.com/Team-Remastered/The-Lost-Castle-Fabric"
   },
 
   "license": "CC0-1.0",
-  "icon": "assets/tlc/icon.png",
+  "icon": "assets/tlc/logolc.png",
 
   "environment": "*",
   "entrypoints": {
