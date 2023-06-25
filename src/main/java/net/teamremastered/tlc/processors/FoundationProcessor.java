@@ -37,8 +37,8 @@ public class FoundationProcessor extends StructureProcessor {
                                                         StructureTemplate.StructureBlockInfo blockInfoLocal,
                                                         StructureTemplate.StructureBlockInfo blockInfoGlobal,
                                                         StructurePlacementData structurePlacementData) {
-        if (blockInfoGlobal.state.isOf(Blocks.YELLOW_CONCRETE)) {
-            if (world instanceof ChunkRegion chunkRegion && !chunkRegion.getCenterPos().equals(new ChunkPos(blockInfoGlobal.pos))) {
+        if (blockInfoGlobal.state().isOf(Blocks.YELLOW_CONCRETE)) {
+            if (world instanceof ChunkRegion chunkRegion && !chunkRegion.getCenterPos().equals(new ChunkPos(blockInfoGlobal.pos()))) {
                 return blockInfoGlobal;
             }
 
@@ -53,12 +53,12 @@ public class FoundationProcessor extends StructureProcessor {
             };
 
             // Replace the yellow concrete itself
-            if (blockInfoGlobal.state.isOf(Blocks.YELLOW_CONCRETE)) {
-                blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos, RandomBlocks(foundationBlocks), blockInfoGlobal.nbt);
+            if (blockInfoGlobal.state().isOf(Blocks.YELLOW_CONCRETE)) {
+                blockInfoGlobal = new StructureTemplate.StructureBlockInfo(blockInfoGlobal.pos(), RandomBlocks(foundationBlocks), blockInfoGlobal.nbt());
             }
 
             // Reusable mutable
-            BlockPos.Mutable mutable = blockInfoGlobal.pos.mutableCopy().move(Direction.DOWN); // Move down since we already processed the first block
+            BlockPos.Mutable mutable = blockInfoGlobal.pos().mutableCopy().move(Direction.DOWN); // Move down since we already processed the first block
             BlockState currBlockState = world.getBlockState(mutable);
 
             while (mutable.getY() > world.getBottomY()

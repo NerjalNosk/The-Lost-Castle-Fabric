@@ -58,8 +58,8 @@ public class LCMap {
             int min = 15;
             int max = 25;
             int priceEmeralds = ThreadLocalRandom.current().nextInt(min, max + 1);
-            if (!entity.world.isClient && entity.world.getRegistryKey() == World.OVERWORLD) {
-                ItemStack map = createMap((ServerWorld) entity.world, entity.getBlockPos());
+            if (!entity.getWorld().isClient && entity.getWorld().getRegistryKey() == World.OVERWORLD) {
+                ItemStack map = createMap((ServerWorld) entity.getWorld(), entity.getBlockPos());
                 return new TradeOffer(new ItemStack(Items.EMERALD, priceEmeralds), new ItemStack(Items.COMPASS), map, 12, xp, 0.2F);
             }
             return null;
