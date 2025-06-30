@@ -13,6 +13,7 @@ import net.minecraft.predicate.entity.LocationPredicate;
 import net.minecraft.server.ServerAdvancementLoader;
 import net.minecraft.util.Identifier;
 import net.minecraft.world.gen.structure.StructureKeys;
+import net.teamremastered.tlc.registries.LCStructures;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
@@ -21,9 +22,9 @@ public abstract class ServerAdvancementLoaderMixin {
     @WrapOperation(method = "method_20723", at = @At(value = "INVOKE", target = "Lnet/minecraft/advancement/Advancement$Builder;fromJson(Lcom/google/gson/JsonObject;Lnet/minecraft/predicate/entity/AdvancementEntityPredicateDeserializer;)Lnet/minecraft/advancement/Advancement$Builder;"))
     private Advancement.Builder tlc$buildFromJsonWrapper(JsonObject obj, AdvancementEntityPredicateDeserializer predicateDeserializer, Operation<Advancement.Builder> original, @Local(argsOnly = true) Identifier id) {
         Advancement.Builder result = original.call(obj, predicateDeserializer);
-        if (id.equals(Identifier.tryParse("follow_ender_eye"))) {
+        if (id.equals(Identifier.tryParse("story/follow_ender_eye"))) {
             String s = "in_castle";
-            CriterionConditions c = TickCriterion.Conditions.createLocation(LocationPredicate.feature(StructureKeys.STRONGHOLD));
+            CriterionConditions c = TickCriterion.Conditions.createLocation(LocationPredicate.feature(RegistryKey.of(RegistryKeys.STRUCTURE, LCStructures.CASTLE_ID)));
             AdvancementCriterion criterion = new AdvancementCriterion(c);
             result.criterion(s, criterion);
             result.requirements(new String[][]{{s}});
