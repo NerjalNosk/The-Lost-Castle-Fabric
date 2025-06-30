@@ -4,18 +4,23 @@ import com.google.gson.JsonObject;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
+import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.advancement.Advancement;
 import net.minecraft.advancement.AdvancementCriterion;
 import net.minecraft.advancement.criterion.CriterionConditions;
 import net.minecraft.advancement.criterion.TickCriterion;
 import net.minecraft.predicate.entity.AdvancementEntityPredicateDeserializer;
 import net.minecraft.predicate.entity.LocationPredicate;
+import net.minecraft.registry.RegistryKey;
+import net.minecraft.registry.RegistryKeys;
 import net.minecraft.server.ServerAdvancementLoader;
 import net.minecraft.util.Identifier;
-import net.minecraft.world.gen.structure.StructureKeys;
+import net.teamremastered.tlc.TheLostCastle;
 import net.teamremastered.tlc.registries.LCStructures;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
+
+import java.util.Arrays;
 
 @Mixin(ServerAdvancementLoader.class)
 public abstract class ServerAdvancementLoaderMixin {
@@ -27,7 +32,13 @@ public abstract class ServerAdvancementLoaderMixin {
             CriterionConditions c = TickCriterion.Conditions.createLocation(LocationPredicate.feature(RegistryKey.of(RegistryKeys.STRUCTURE, LCStructures.CASTLE_ID)));
             AdvancementCriterion criterion = new AdvancementCriterion(c);
             result.criterion(s, criterion);
-            result.requirements(new String[][]{{s}});
+            String[][] req = ((AdvBuilderAccessor)result).getRequirements();
+            req = Arrays.copyOf(req, req.length+1);
+            req[req.length-1] = new String[]{s};
+            result.requirements(req);
+            if (FabricLoader.getInstance().isDevelopmentEnvironment()) {
+                TheLostCastle.LOGGER.info("[The Lost Castle/debug] Eye Spy advancement modified to: {}", result.toJson());
+            }
         }
         return result;
     }
