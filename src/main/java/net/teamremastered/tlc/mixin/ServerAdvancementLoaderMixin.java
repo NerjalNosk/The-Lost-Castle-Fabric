@@ -33,8 +33,8 @@ public abstract class ServerAdvancementLoaderMixin {
             AdvancementCriterion criterion = new AdvancementCriterion(c);
             result.criterion(s, criterion);
             String[][] req = ((AdvBuilderAccessor)result).getRequirements();
-            req = Arrays.copyOf(req, req.length+1);
-            req[req.length-1] = new String[]{s};
+            req[0] = Arrays.copyOf(req[0], req[0].length +1);
+            req[0][req[0].length-1] = s;
             result.requirements(req);
             if (FabricLoader.getInstance().isDevelopmentEnvironment()) {
                 TheLostCastle.LOGGER.info("[The Lost Castle/debug] Eye Spy advancement modified to: {}", result.toJson());
