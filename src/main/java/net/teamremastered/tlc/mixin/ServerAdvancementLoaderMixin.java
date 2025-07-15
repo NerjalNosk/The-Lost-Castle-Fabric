@@ -16,7 +16,7 @@ import net.minecraft.registry.RegistryKeys;
 import net.minecraft.server.ServerAdvancementLoader;
 import net.minecraft.util.Identifier;
 import net.teamremastered.tlc.TheLostCastle;
-import net.teamremastered.tlc.registries.LCStructures;
+import net.teamremastered.tlc.registries.LCStructure;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
@@ -29,7 +29,7 @@ public abstract class ServerAdvancementLoaderMixin {
         Advancement.Builder result = original.call(obj, predicateDeserializer);
         if (id.equals(Identifier.tryParse("story/follow_ender_eye"))) {
             String s = "in_castle";
-            CriterionConditions c = TickCriterion.Conditions.createLocation(LocationPredicate.feature(RegistryKey.of(RegistryKeys.STRUCTURE, LCStructures.CASTLE_ID)));
+            CriterionConditions c = TickCriterion.Conditions.createLocation(LocationPredicate.feature(RegistryKey.of(RegistryKeys.STRUCTURE, LCStructure.CASTLE_ID)));
             AdvancementCriterion criterion = new AdvancementCriterion(c);
             result.criterion(s, criterion);
             String[][] req = ((AdvBuilderAccessor)result).getRequirements();
